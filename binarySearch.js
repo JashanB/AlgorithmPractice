@@ -35,7 +35,17 @@ let defaultCompare = (a, b) =>
     Loops
 */
 let binarySearchWithLoops = (array, element, compare = defaultCompare) => {
-    return -1;
+  let left = 0;
+  let right = array.length - 1;
+  while (left <= right) {
+    let middle = Math.floor((left + right /2));
+    if (compare(array[middle], element) === 1) {
+      right = middle -1;
+    } else if (compare(array[middle], element) === -1) {
+      left = middle +1;
+    } else if ((compare(array[middle], element) === 0)) {
+      return middle;
+    }
+  }
+  return -1;
 };
-
-export default binarySearchWithLoops;
