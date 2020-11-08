@@ -30,19 +30,36 @@ let defaultCompare = (a, b) =>
 //   return -1;
 // };
 
+// let binarySearchWithRecursion = (array, element, compare = defaultCompare, left = 0, right = array.length - 1) => {
+//   if (left > right) {
+//     return -1;
+//   };
+//   const middle = Math.floor((right + left/2));
+//   if (defaultCompare(array[middle], element) === 1) {
+//     binarySearchWithRecursion(array, element, compare, left , middle -1);
+//   } else if (defaultCompare(array[middle], element) === -1) {
+//     binarySearchWithRecursion(array, element, compare, middle +1, right);
+//   } else if (defaultCompare(array[middle], element) === 0) {
+//     return middle;
+//   }
+//   return -1;
+// };
+
+
 let binarySearchWithRecursion = (array, element, compare = defaultCompare, left = 0, right = array.length - 1) => {
-  if (left > right) {
-    return -1;
-  };
-  const middle = Math.floor((right + left/2));
-  if (defaultCompare(array[middle], element) === 1) {
-    binarySearchWithRecursion(array, element, compare, left , middle -1);
-  } else if (defaultCompare(array[middle], element) === -1) {
-    binarySearchWithRecursion(array, element, compare, middle +1, right);
-  } else if (defaultCompare(array[middle], element) === 0) {
-    return middle;
-  }
-  return -1;
+  if (left > right) { return -1; }
+    const middle = Math.floor((right + left) / 2);
+    const comparison = compare(element, array[middle]);
+    
+    if (comparison === 0) { return middle; }
+    
+    const newBounds = comparison === -1
+        ? [left, middle - 1]
+        : [middle + 1, right];
+    
+    return binarySearchWithRecursion(array, element, compare, ...newBounds);
+
 };
+
 
 export default binarySearchWithRecursion;
