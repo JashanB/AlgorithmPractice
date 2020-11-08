@@ -45,21 +45,33 @@ let defaultCompare = (a, b) =>
 //   return -1;
 // };
 
+//tail recursion
+// let binarySearchWithRecursion = (array, element, compare = defaultCompare, left = 0, right = array.length - 1) => {
+//   if (left > right) { return -1; }
+//     const middle = Math.floor((right + left) / 2);
+//     const comparison = compare(element, array[middle]);
+    
+//     if (comparison === 0) { return middle; }
+    
+//     const newBounds = comparison === -1
+//         ? [left, middle - 1]
+//         : [middle + 1, right];
+    
+//     return binarySearchWithRecursion(array, element, compare, ...newBounds);
 
-let binarySearchWithRecursion = (array, element, compare = defaultCompare, left = 0, right = array.length - 1) => {
-  if (left > right) { return -1; }
-    const middle = Math.floor((right + left) / 2);
-    const comparison = compare(element, array[middle]);
-    
-    if (comparison === 0) { return middle; }
-    
-    const newBounds = comparison === -1
-        ? [left, middle - 1]
-        : [middle + 1, right];
-    
-    return binarySearchWithRecursion(array, element, compare, ...newBounds);
+// };
 
+let binarySearchWithArraySplitting = (array, element, compare = defaultCompare) => {
+  if (array.length === 1) {
+    return array[0];
+  };
+  const middle = Math.floor((array.length - 1) / 2);
+  const comparison = compare(element, array[middle]);
+  let newArray = array
+  if (comparison === 0) { return middle; }
+  comparison === 1 ? newArray = newArray.slice(middle + 1) : newArray = newArray.slice(0, middle - 1)
+
+  return binarySearchWithArraySplitting(newArray, element, compare);
 };
 
-
-export default binarySearchWithRecursion;
+export default binarySearchWithArraySplitting;
